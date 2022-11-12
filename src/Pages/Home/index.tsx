@@ -1,4 +1,4 @@
-import Nome from '../../assets/nome.svg';
+import Nome from '../../assets/Nome.svg';
 import PrimaryButton from '../../components/PrimaryButton';
 import SecondaryButton from '../../components/SecondaryButton';
 
