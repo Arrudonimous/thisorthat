@@ -37,10 +37,10 @@ export default function LoginAdmin() {
   return (
     <Container title="Conecte-se como admin">
       <div className=" flex flex-col gap-4 mt-20 px-16">
-        <Input placeholder="E-mail..." type="email">
+        <Input placeholder="E-mail..." text="email" type="text">
           <MdMail size={35} />
         </Input>
-        <Input placeholder="Senha..." type="password">
+        <Input placeholder="Senha..." text="password" type="password">
           <MdLock size={35} />
         </Input>
         <div
