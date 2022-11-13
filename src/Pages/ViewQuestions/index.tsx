@@ -12,7 +12,7 @@ import ViewInput from '../../components/ViewInput';
 export default function ViewQuestions() {
   return (
     <Container title="Visualizar perguntas">
-      <div className=" flex flex-row mt-16 rounded-lg px-6 py-4 text-text">
+      <div className=" flex flex-row mt-12 rounded-lg px-6 py-4 text-text">
         <Swiper navigation modules={[Navigation]} className="flex flex-row gap-2">
 
           <SwiperSlide className="px-11">
