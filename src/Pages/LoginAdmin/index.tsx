@@ -3,6 +3,7 @@ import { MdMail, MdLock } from 'react-icons/md';
 import Button from '../../components/Button';
 import Container from '../../components/Container/Index';
 import Input from '../../components/Input';
+
 // import { InputContext } from '../../contexts/InputContext';
 // import api from '../../services/api';
 
@@ -30,7 +31,7 @@ export default function LoginAdmin() {
           className="mt-4 bg-secondary rounded-lg hover:bg-[#002437] active:bg-[#001723] ease-in duration-150"
           // onClick={handleLogin}
         >
-          <Button />
+          <Button route="/view/questions" />
         </div>
       </div>
     </Container>
