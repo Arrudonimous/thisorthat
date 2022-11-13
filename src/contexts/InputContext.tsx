@@ -11,6 +11,8 @@ interface DataTypes{
   setEmail: any;
   password: string;
   setPassword: any;
+  name: string;
+  setName: any;
 }
 
 export const InputContext = createContext({} as DataTypes);
@@ -18,9 +20,10 @@ export const InputContext = createContext({} as DataTypes);
 export default function InputProvider({ children }: InputProviderProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
 
   const value = useMemo(() => ({
-    email, password, setEmail, setPassword,
+    email, password, setEmail, setPassword, name, setName,
   }), [email, password]);
 
   return (

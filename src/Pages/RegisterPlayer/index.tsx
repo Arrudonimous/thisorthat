@@ -1,4 +1,5 @@
 import { MdMail, MdLock } from 'react-icons/md';
+import { BsFillPersonFill } from 'react-icons/bs';
 import { useContext } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
@@ -10,7 +11,7 @@ import api from '../../services/api';
 
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function LoginAdmin() {
+export default function RegisterPlayer() {
   const navigate = useNavigate();
   const context = useContext(InputContext);
 
@@ -35,8 +36,11 @@ export default function LoginAdmin() {
   }
 
   return (
-    <Container title="Conecte-se como admin">
-      <div className=" flex flex-col gap-4 mt-20 px-16">
+    <Container title="Registre-se como jogador">
+      <div className=" flex flex-col gap-4 mt-8 px-16">
+        <Input placeholder="Nome..." text="name" type="text">
+          <BsFillPersonFill size={35} />
+        </Input>
         <Input placeholder="E-mail..." text="email" type="text">
           <MdMail size={35} />
         </Input>
@@ -47,7 +51,11 @@ export default function LoginAdmin() {
           className="mt-4 bg-secondary rounded-lg hover:bg-[#002437] active:bg-[#001723] ease-in duration-150"
           onClick={handleLogin}
         >
-          <Button title="Entrar" />
+          <Button title="Registrar" />
+        </div>
+        <div className="flex justify-center font-extrabold opacity-50 gap-1">
+          <h1>Já tem uma conta? </h1>
+          <a href="/" className="hover:text-[#BBFE7D] duration-150 ease-in">Conecte-se</a>
         </div>
       </div>
       <ToastContainer autoClose={2000} />

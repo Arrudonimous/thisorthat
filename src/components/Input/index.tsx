@@ -22,6 +22,10 @@ export default function Input({
     context.setPassword(value);
   }
 
+  if (text === 'name') {
+    context.setName(value);
+  }
+
   return (
     <div className="bg-[#D9D9D9] text-secondary flex flex-row gap-3 px-3 py-2 items-center rounded-lg drop-shadow-3xl">
       {children}
