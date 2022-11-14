@@ -29,8 +29,6 @@ export default function LoginAdmin() {
 
       localStorage.setItem('token', data.token);
 
-      console.log(localStorage.getItem('token'));
-
       setTimeout(() => navigate('/view/questions'), 2700);
     } catch (error : any) {
       toast.error(error.response.data.message, {
