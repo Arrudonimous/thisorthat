@@ -1,5 +1,5 @@
 import { MdMail, MdLock } from 'react-icons/md';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../components/Button';
@@ -13,8 +13,10 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function LoginAdmin() {
   const navigate = useNavigate();
   const context = useContext(InputContext);
+  const [isLoading, setIsLoading] = useState(false);
 
   async function handleLogin() {
+    setIsLoading(true);
     try {
       const { data } = await api.post('/auth/admin-login', {
         email: context.email,
@@ -31,6 +33,8 @@ export default function LoginAdmin() {
       toast.error(error.response.data.message, {
         position: 'bottom-center',
       });
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -47,7 +51,7 @@ export default function LoginAdmin() {
           className="mt-4 bg-secondary rounded-lg hover:bg-[#002437] active:bg-[#001723] ease-in duration-150"
           onClick={handleLogin}
         >
-          <Button title="Entrar" />
+          <Button title="Entrar" loading={isLoading} />
         </div>
       </div>
       <ToastContainer autoClose={2000} />
