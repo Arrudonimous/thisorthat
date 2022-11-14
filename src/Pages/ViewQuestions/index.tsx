@@ -3,7 +3,7 @@ import { TbSquareCheck } from 'react-icons/tb';
 import { BsFillTrashFill } from 'react-icons/bs';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { ToastContainer, toast } from 'react-toastify';
-import { Navigation } from 'swiper';
+import { Navigation, Pagination } from 'swiper';
 
 import Container from '../../components/Container/Index';
 import OR from '../../assets/OU.svg';
@@ -12,6 +12,7 @@ import api from '../../services/api';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 interface Question{
   id: number;
@@ -49,8 +50,14 @@ export default function ViewQuestions() {
   return (
     <>
       <Container title="Visualizar perguntas">
-        <div className=" flex flex-row mt-12 rounded-lg px-6 py-4 text-text">
-          <Swiper navigation modules={[Navigation]} className="flex flex-row gap-2">
+        <div className=" flex flex-row mt-6 rounded-lg px-6 py-4 text-text">
+          <Swiper
+            navigation
+            modules={[Navigation, Pagination]}
+            pagination
+            loop
+            className="flex flex-row gap-2"
+          >
 
             {nonValidatedQuestions.map((question) => (
               <SwiperSlide className="px-11" key={question.id}>
