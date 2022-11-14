@@ -1,15 +1,29 @@
+import { useEffect } from 'react';
 import { TbSquareCheck } from 'react-icons/tb';
 import { BsFillTrashFill } from 'react-icons/bs';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
+
 import Container from '../../components/Container/Index';
 import OR from '../../assets/OU.svg';
+import ViewInput from '../../components/ViewInput';
+import api from '../../services/api';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
-import ViewInput from '../../components/ViewInput';
 
 export default function ViewQuestions() {
+  useEffect(() => {
+    try {
+      (async () => {
+        const { data } = await api.get('/unvalidated-questions');
+        console.log(data);
+      })();
+    } catch (error: any) {
+      console.log(error.data.response.message);
+    }
+  }, []);
+
   return (
     <Container title="Visualizar perguntas">
       <div className=" flex flex-row mt-12 rounded-lg px-6 py-4 text-text">

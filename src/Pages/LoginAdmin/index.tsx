@@ -27,7 +27,10 @@ export default function LoginAdmin() {
         position: 'bottom-center',
       });
 
-      api.defaults.headers.common.Authorization = data.token;
+      localStorage.setItem('token', data.token);
+
+      console.log(localStorage.getItem('token'));
+
       setTimeout(() => navigate('/view/questions'), 2700);
     } catch (error : any) {
       toast.error(error.response.data.message, {
