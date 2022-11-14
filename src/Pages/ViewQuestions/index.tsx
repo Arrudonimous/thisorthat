@@ -30,11 +30,12 @@ interface Question{
 
 export default function ViewQuestions() {
   const [nonValidatedQuestions, setNonValidatedQuestions] = useState<Question[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [isValidating, setIsValidating] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     try {
       (async () => {
         const { data } = await api.get('/unvalidated-questions');
@@ -47,7 +48,7 @@ export default function ViewQuestions() {
     } finally {
       setIsLoading(false);
     }
-  }, [isValidating]);
+  }, [isValidating, isDeleting]);
 
   async function handleValidateQuestion(id: number) {
     setIsValidating(true);
@@ -85,22 +86,18 @@ export default function ViewQuestions() {
     <>
       <Container title="Visualizar perguntas">
         <div className=" flex flex-row mt-6 rounded-lg px-6 py-4 text-text">
-          <Swiper
-            navigation
-            modules={[Navigation, Pagination]}
-            pagination
-            loop
-            className="flex flex-row gap-2"
-          >
 
-            {nonValidatedQuestions.map((question) => (
-              <SwiperSlide className="px-11" key={question.id}>
-                <div className="bg-secondary px-6 py-4 rounded-lg">
-                  {isLoading ? (
-                    <div className="flex justify-between items-center mb-4">
-                      <h1>oi</h1>
-                    </div>
-                  ) : (
+          {nonValidatedQuestions.length ? (
+            <Swiper
+              navigation
+              modules={[Navigation, Pagination]}
+              pagination
+              loop
+              className="flex flex-row gap-2"
+            >
+              {nonValidatedQuestions.map((question) => (
+                <SwiperSlide className="px-11" key={question.id}>
+                  <div className="bg-secondary px-6 py-4 rounded-lg">
                     <div className="flex justify-between items-center mb-4">
                       <h1 className="text-base font-bold">{question.question}</h1>
 
@@ -142,28 +139,31 @@ export default function ViewQuestions() {
                         </button>
                       </div>
                     </div>
-                  )}
 
-                  <ViewInput text={question.first_option} />
+                    <ViewInput text={question.first_option} />
 
-                  <div className="flex justify-center my-2">
-                    <img src={OR} alt="" />
+                    <div className="flex justify-center my-2">
+                      <img src={OR} alt="" />
+                    </div>
+
+                    <ViewInput text={question.second_option} />
+
+                    <div className="flex justify-end mt-3 font-bold">
+                      <h1>
+                        Enviada por:
+                        {' '}
+                        {question.user.name}
+                      </h1>
+                    </div>
                   </div>
-
-                  <ViewInput text={question.second_option} />
-
-                  <div className="flex justify-end mt-3 font-bold">
-                    <h1>
-                      Enviada por:
-                      {' '}
-                      {question.user.name}
-                    </h1>
-                  </div>
-                </div>
-              </SwiperSlide>
-            ))}
-
-          </Swiper>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          ) : (
+            <div className="flex justify-center items-center text-xl">
+              <h1>Não há questões para serem verificadas :(</h1>
+            </div>
+          )}
         </div>
       </Container>
       <ToastContainer />
