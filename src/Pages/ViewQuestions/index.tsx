@@ -30,25 +30,22 @@ interface Question{
 
 export default function ViewQuestions() {
   const [nonValidatedQuestions, setNonValidatedQuestions] = useState<Question[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [isValidating, setIsValidating] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isDeleted, setIsDeleted] = useState(false);
 
   useEffect(() => {
-    setIsLoading(true);
-    try {
-      (async () => {
+    (async () => {
+      try {
         const { data } = await api.get('/unvalidated-questions');
         setNonValidatedQuestions(data.questions);
-      })();
-    } catch (error: any) {
-      toast.error(error.data.response.message, {
-        position: 'bottom-center',
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  }, [isValidating, isDeleting]);
+      } catch (error: any) {
+        toast.error(error.response.data.message, {
+          position: 'bottom-center',
+        });
+      }
+    })();
+  }, [isValidating, isDeleting, isDeleted]);
 
   async function handleValidateQuestion(id: number) {
     setIsValidating(true);
@@ -79,6 +76,12 @@ export default function ViewQuestions() {
       });
     } finally {
       setIsDeleting(false);
+      if (isDeleted) {
+        setIsDeleted(false);
+      }
+      if (!isDeleted) {
+        setIsDeleted(true);
+      }
     }
   }
 
@@ -86,7 +89,6 @@ export default function ViewQuestions() {
     <>
       <Container title="Visualizar perguntas">
         <div className=" flex flex-row mt-6 rounded-lg px-6 py-4 text-text">
-
           {nonValidatedQuestions.length ? (
             <Swiper
               navigation
@@ -160,9 +162,7 @@ export default function ViewQuestions() {
               ))}
             </Swiper>
           ) : (
-            <div className="flex justify-center items-center text-xl">
-              <h1>Não há questões para serem verificadas :(</h1>
-            </div>
+            <h1 className="text-lg font-bold">Não há questões para serem verificadas :(</h1>
           )}
         </div>
       </Container>
