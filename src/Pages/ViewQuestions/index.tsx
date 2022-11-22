@@ -87,7 +87,7 @@ export default function ViewQuestions() {
 
   return (
     <>
-      <Container title="Visualizar perguntas">
+      <Container title="Visualizar perguntas" backPath="/login/admin">
         <div className=" flex flex-row mt-6 rounded-lg px-6 py-4 text-text">
           {nonValidatedQuestions.length ? (
             <Swiper

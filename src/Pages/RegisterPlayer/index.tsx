@@ -41,7 +41,7 @@ export default function RegisterPlayer() {
   }
 
   return (
-    <Container title="Registre-se como jogador">
+    <Container title="Registre-se como jogador" backPath="/">
       <div className=" flex flex-col gap-4 mt-8 px-16">
         <Input placeholder="Nome..." text="name" type="text">
           <BsFillPersonFill size={35} />
