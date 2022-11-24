@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { TbSquareCheck } from 'react-icons/tb';
 import { BsFillTrashFill } from 'react-icons/bs';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { ToastContainer, toast } from 'react-toastify';
 import { Navigation, Pagination } from 'swiper';
+import { SocketContext } from '../../components/App';
 
 import Container from '../../components/Container/Index';
 import OR from '../../assets/OU.svg';
@@ -34,6 +35,8 @@ export default function ViewQuestions() {
   const [isDeleting, setIsDeleting] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
 
+  const { socket } = useContext(SocketContext);
+
   useEffect(() => {
     (async () => {
       try {
@@ -45,7 +48,27 @@ export default function ViewQuestions() {
         });
       }
     })();
-  }, [isValidating, isDeleting, isDeleted]);
+  }, [isDeleting]);
+
+  useEffect(() => {
+    try {
+      socket.on('question-created', (data: Question) => {
+        setNonValidatedQuestions((question) => [...question, data]);
+      });
+
+      socket.on('question-deleted', (data: any) => {
+        setNonValidatedQuestions(data.questionsRemaining);
+      });
+
+      socket.on('question-validated', (data: any) => {
+        setNonValidatedQuestions(data.questionsRemaining);
+      });
+    } catch (error: any) {
+      toast.error(error.response.data.message, {
+        position: 'bottom-center',
+      });
+    }
+  }, [socket]);
 
   async function handleValidateQuestion(id: number) {
     setIsValidating(true);
