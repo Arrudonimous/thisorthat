@@ -7,42 +7,17 @@ import { InputContext } from '../../contexts/InputContext';
 import Button from '../../components/Button';
 import Container from '../../components/Container/Index';
 import Input from '../../components/Input';
-import api from '../../services/api';
+import LoginAdminService from './services';
+import PasswordInput from '../../components/PasswordInput';
 
 import 'react-toastify/dist/ReactToastify.css';
-import PasswordInput from '../../components/PasswordInput';
 
 export default function LoginAdmin() {
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
   const context = useContext(InputContext);
-
   const input = document.getElementById('passwordInput');
-
-  async function handleLogin() {
-    setIsLoading(true);
-    try {
-      const { data } = await api.post('/auth/admin-login', {
-        email: context.email,
-        password: context.password,
-      });
-
-      toast.success(data.message, {
-        position: 'bottom-center',
-      });
-
-      localStorage.setItem('token', data.token);
-
-      setTimeout(() => navigate('/view/questions'), 2700);
-    } catch (error : any) {
-      toast.error(error.response.data.message, {
-        position: 'bottom-center',
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  }
 
   input?.addEventListener('keypress', (event) => {
     if (event.key === 'Enter') {
@@ -53,6 +28,31 @@ export default function LoginAdmin() {
       button?.click();
     }
   }, { once: true });
+
+  async function handleLogin() {
+    setIsLoading(true);
+
+    try {
+      const data = await LoginAdminService.postLogin({
+        email: context.email,
+        password: context.password,
+      });
+
+      toast.success(data.message, {
+        position: 'bottom-center',
+      });
+
+      localStorage.setItem('token', data.token);
+
+      setTimeout(() => navigate('/view/questions'), 2200);
+    } catch (error : any) {
+      toast.error(error.response.data.message, {
+        position: 'bottom-center',
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   return (
     <Container title="Conecte-se como admin" backPath="/">
@@ -71,7 +71,7 @@ export default function LoginAdmin() {
           <Button title="Entrar" loading={isLoading} />
         </div>
       </div>
-      <ToastContainer autoClose={2000} />
+      <ToastContainer autoClose={1500} />
     </Container>
   );
 }

@@ -10,7 +10,7 @@ import { Question } from '../../types/Question';
 import Container from '../../components/Container/Index';
 import OR from '../../assets/OU.svg';
 import ViewInput from '../../components/ViewInput';
-import api from '../../services/api';
+import ViewQuestionsService from './services';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -27,7 +27,7 @@ export default function ViewQuestions() {
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await api.get('/unvalidated-questions');
+        const data = await ViewQuestionsService.getQuestions();
         setNonValidatedQuestions(data.questions);
       } catch (error: any) {
         toast.error(error.response.data.message, {
@@ -35,7 +35,7 @@ export default function ViewQuestions() {
         });
       }
     })();
-  }, [isDeleting]);
+  }, []);
 
   useEffect(() => {
     try {
@@ -60,7 +60,7 @@ export default function ViewQuestions() {
   async function handleValidateQuestion(id: number) {
     setIsValidating(true);
     try {
-      const { data } = await api.patch(`/validate-question/${id}`);
+      const data = await ViewQuestionsService.validateQuestion(id);
       toast.success(data.message, {
         position: 'bottom-center',
       });
@@ -76,7 +76,7 @@ export default function ViewQuestions() {
   async function handleDeleteQuestion(id: number) {
     setIsDeleting(true);
     try {
-      const { data } = await api.delete(`/questions/${id}`);
+      const data = await ViewQuestionsService.deleteQuestion(id);
       toast.success(data.message, {
         position: 'bottom-center',
       });
@@ -176,7 +176,7 @@ export default function ViewQuestions() {
           )}
         </div>
       </Container>
-      <ToastContainer />
+      <ToastContainer autoClose={1000} />
 
     </>
   );
