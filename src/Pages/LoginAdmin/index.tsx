@@ -55,7 +55,7 @@ export default function LoginAdmin() {
   }, { once: true });
 
   return (
-    <Container title="Conecte-se como admin">
+    <Container title="Conecte-se como admin" backPath="/">
       <div className=" flex flex-col gap-4 mt-20 px-16">
         <Input placeholder="E-mail..." text="email" type="text">
           <MdMail size={35} />
