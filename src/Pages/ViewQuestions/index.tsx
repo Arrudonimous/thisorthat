@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { ToastContainer, toast } from 'react-toastify';
 import { Navigation, Pagination } from 'swiper';
 import { SocketContext } from '../../components/App';
+import { Question } from '../../types/Question';
 
 import Container from '../../components/Container/Index';
 import OR from '../../assets/OU.svg';
@@ -14,20 +15,6 @@ import api from '../../services/api';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-
-interface Question{
-  id: number;
-  user_id: number;
-  question: string;
-  first_option: string;
-  second_option: string;
-  first_option_chosen_count: number;
-  second_option_chosen_count: number;
-  is_validated: boolean;
-  user:{
-    name: string;
-  }
-}
 
 export default function ViewQuestions() {
   const [nonValidatedQuestions, setNonValidatedQuestions] = useState<Question[]>([]);
