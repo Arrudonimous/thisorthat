@@ -1,7 +1,7 @@
 import { MdMail, MdLock } from 'react-icons/md';
 import { useContext, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { InputContext } from '../../contexts/InputContext';
 
 import Button from '../../components/Button';
@@ -15,7 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function LoginMember() {
   const [isLoading, setIsLoading] = useState(false);
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const context = useContext(InputContext);
   const input = document.getElementById('passwordInput');
 
@@ -44,7 +44,7 @@ export default function LoginMember() {
 
       localStorage.setItem('token', data.token);
 
-      // setTimeout(() => navigate('/view/questions'), 2200);
+      setTimeout(() => navigate('/home-player'), 2200);
     } catch (error : any) {
       toast.error(error.response.data.message, {
         position: 'bottom-center',

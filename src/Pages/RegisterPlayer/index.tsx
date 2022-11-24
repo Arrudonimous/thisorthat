@@ -11,26 +11,30 @@ import Input from '../../components/Input';
 import api from '../../services/api';
 
 import 'react-toastify/dist/ReactToastify.css';
+import RegisterPlayerServices from './services/RegisterPlayerServices';
 
 export default function RegisterPlayer() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const context = useContext(InputContext);
 
-  async function handleLogin() {
+  async function handleRegister() {
     setIsLoading(true);
     try {
-      const { data } = await api.post('/auth/admin-login', {
+      const data = await RegisterPlayerServices.postPlayer({
+        name: context.name,
         email: context.email,
         password: context.password,
       });
+      console.log(data);
 
       toast.success(data.message, {
         position: 'bottom-center',
       });
 
       api.defaults.headers.common.Authorization = data.token;
-      setTimeout(() => navigate('/view/questions'), 2700);
+      localStorage.setItem('token', data.token);
+      setTimeout(() => navigate('/home-player'), 2700);
     } catch (error : any) {
       toast.error(error.response.data.message, {
         position: 'bottom-center',
@@ -54,7 +58,7 @@ export default function RegisterPlayer() {
         </Input>
         <div
           className="mt-4 bg-secondary rounded-lg hover:bg-[#002437] active:bg-[#001723] ease-in duration-150"
-          onClick={handleLogin}
+          onClick={handleRegister}
         >
           <Button title="Registrar" loading={isLoading} />
         </div>
