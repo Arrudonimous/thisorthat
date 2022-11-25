@@ -13,7 +13,7 @@ interface ContainerProps{
 export default function Container({ title, children, backPath }: ContainerProps) {
   return (
     <div
-      className="flex mx-auto items-center justify-center text-text flex-row h-full"
+      className="flex mx-auto items-center justify-center md:text-text flex-row h-full "
     >
       <div className="flex flex-row max-h-[30rem] h-full w-full max-w-4xl rounded-3xl overflow-hidden">
         <div className="w-1/3 bg-light flex items-center justify-between bg-gradient-container bg-cover flex-col p-5 ">

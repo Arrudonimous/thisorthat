@@ -1,4 +1,23 @@
+import { useEffect, useState } from 'react';
+import { Question } from '../../types/Question';
+
+import QuestionsService from './services';
+
 export default function Questions() {
+  const [questions, setQuestions] = useState<Question[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const data = await QuestionsService.getQuestions();
+        setQuestions(data.questions);
+        console.log(questions);
+      } catch (error: any) {
+        console.log(error.response.data.message);
+      }
+    })();
+  }, []);
+
   return (
     <div className="flex flex-row h-full text-text ">
       <div className="absolute bg-light w-4/6 left-2/4 -translate-x-2/4 top-8 py-4 items-center justify-center flex rounded-2xl">

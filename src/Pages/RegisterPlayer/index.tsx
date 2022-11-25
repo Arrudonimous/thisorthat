@@ -3,6 +3,7 @@ import { BsFillPersonFill } from 'react-icons/bs';
 import { useContext, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { motion as m } from 'framer-motion';
 import { InputContext } from '../../contexts/InputContext';
 
 import Button from '../../components/Button';
@@ -11,6 +12,7 @@ import Input from '../../components/Input';
 
 import 'react-toastify/dist/ReactToastify.css';
 import RegisterPlayerServices from './services';
+import { EnterTransition } from '../../styles/EnterTransition';
 
 export default function RegisterPlayer() {
   const navigate = useNavigate();
@@ -47,29 +49,35 @@ export default function RegisterPlayer() {
   }
 
   return (
-    <Container title="Registre-se como jogador" backPath="/">
-      <div className=" flex flex-col gap-4 mt-8 px-16">
-        <Input placeholder="Nome..." text="name" type="text">
-          <BsFillPersonFill size={35} />
-        </Input>
-        <Input placeholder="E-mail..." text="email" type="text">
-          <MdMail size={35} />
-        </Input>
-        <Input placeholder="Senha..." text="password" type="password">
-          <MdLock size={35} />
-        </Input>
-        <div
-          className="mt-4 bg-secondary rounded-lg hover:bg-[#002437] active:bg-[#001723] ease-in duration-150"
-          onClick={handleRegister}
-        >
-          <Button title="Registrar" loading={isLoading} />
+    <m.div
+      className="w-full h-full"
+      {...EnterTransition}
+    >
+      <Container title="Registre-se como jogador" backPath="/">
+        <div className=" flex flex-col gap-4 mt-8 px-16">
+          <Input placeholder="Nome..." text="name" type="text">
+            <BsFillPersonFill size={35} />
+          </Input>
+          <Input placeholder="E-mail..." text="email" type="text">
+            <MdMail size={35} />
+          </Input>
+          <Input placeholder="Senha..." text="password" type="password">
+            <MdLock size={35} />
+          </Input>
+          <div
+            className="mt-4 bg-secondary rounded-lg hover:bg-[#002437] active:bg-[#001723] ease-in duration-150"
+            onClick={handleRegister}
+          >
+            <Button title="Registrar" loading={isLoading} />
+          </div>
+          <div className="flex justify-center font-extrabold opacity-50 gap-1">
+            <h1>Já tem uma conta? </h1>
+            <a href="/login/member" className="hover:text-[#BBFE7D] duration-150 ease-in">Conecte-se</a>
+          </div>
         </div>
-        <div className="flex justify-center font-extrabold opacity-50 gap-1">
-          <h1>Já tem uma conta? </h1>
-          <a href="/login/member" className="hover:text-[#BBFE7D] duration-150 ease-in">Conecte-se</a>
-        </div>
-      </div>
-      <ToastContainer autoClose={2000} />
-    </Container>
+        <ToastContainer autoClose={2000} />
+      </Container>
+    </m.div>
+
   );
 }
