@@ -10,6 +10,8 @@ module.exports = {
       backgroundImage: {
         base: 'linear-gradient(180deg, #319686 0%, #155053 50%, rgba(1, 32, 48, 0.92) 100%)',
         'gradient-container': 'url(/src/assets/Gradient.png)',
+        firstOption: 'linear-gradient(180deg, #13678A 0%, rgba(19, 103, 138, 0.85) 100%);',
+        secondOption: 'linear-gradient(180deg, #012030 0%, rgba(1, 32, 48, 0.85) 100%);',
       },
       colors: {
         text: '#DAFDBA',

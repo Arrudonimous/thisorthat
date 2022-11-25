@@ -3,6 +3,7 @@ import Home from './Pages/Home';
 import HomeMember from './Pages/HomeMember';
 import LoginAdmin from './Pages/LoginAdmin';
 import LoginMember from './Pages/LoginMember';
+import Questions from './Pages/Questions';
 import RegisterPlayer from './Pages/RegisterPlayer';
 import SendQuestions from './Pages/SendQuestions';
 import ViewQuestions from './Pages/ViewQuestions';
@@ -17,6 +18,7 @@ export default function Routes() {
       <Route path="/send/questions" element={<SendQuestions />} />
       <Route path="/view/questions" element={<ViewQuestions />} />
       <Route path="/register/player" element={<RegisterPlayer />} />
+      <Route path="/questions" element={<Questions />} />
     </Switch>
   );
 }

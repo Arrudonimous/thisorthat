@@ -25,7 +25,7 @@ export default function HomeMember() {
     <Container title={`Bem vindo(a), ${name}`} backPath="/">
       <div className=" flex flex-row mt-6 rounded-lg px-6 py-4 text-text">
         <div className="w-full px-16 py-4 rounded-lg mt-8 flex flex-col items-center text-lg font-bold gap-2">
-          <a href="/" className="bg-light w-full items-center justify-center flex py-3 rounded-lg">
+          <a href="/questions" className="bg-light w-full items-center justify-center flex py-3 rounded-lg">
             Jogar
           </a>
           Ou...
