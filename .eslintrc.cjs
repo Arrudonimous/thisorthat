@@ -32,5 +32,6 @@ module.exports = {
     'no-nested-ternary': 0,
     'react/jsx-no-constructed-context-values': 0,
     'class-methods-use-this': 0,
+    'react/require-default-props': 0,
   },
 };

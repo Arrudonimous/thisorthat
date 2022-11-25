@@ -29,7 +29,7 @@ export default function HomeMember() {
             Jogar
           </a>
           Ou...
-          <a href="/" className="bg-light w-full items-center justify-center flex py-3 rounded-lg">
+          <a href="/send/questions" className="bg-light w-full items-center justify-center flex py-3 rounded-lg">
             Perguntar
           </a>
         </div>

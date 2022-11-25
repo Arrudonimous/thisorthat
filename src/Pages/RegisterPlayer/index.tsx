@@ -8,7 +8,6 @@ import { InputContext } from '../../contexts/InputContext';
 import Button from '../../components/Button';
 import Container from '../../components/Container/Index';
 import Input from '../../components/Input';
-import api from '../../services/api';
 
 import 'react-toastify/dist/ReactToastify.css';
 import RegisterPlayerServices from './services';
@@ -36,7 +35,6 @@ export default function RegisterPlayer() {
         position: 'bottom-center',
       });
 
-      api.defaults.headers.common.Authorization = login.token;
       localStorage.setItem('token', login.token);
       setTimeout(() => navigate('/home-player'), 2700);
     } catch (error : any) {

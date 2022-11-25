@@ -3,7 +3,7 @@ import { InputContext } from '../../contexts/InputContext';
 
 interface InputProps{
   placeholder: string;
-  children: ReactNode;
+  children?: ReactNode;
   type: string;
   text: string;
 }
@@ -24,6 +24,18 @@ export default function Input({
 
   if (text === 'name') {
     context.setName(value);
+  }
+
+  if (text === 'firstOption') {
+    context.setFirstOption(value);
+  }
+
+  if (text === 'secondOption') {
+    context.setSecondOption(value);
+  }
+
+  if (text === 'questionTitle') {
+    context.setQuestionTitle(value);
   }
 
   return (

@@ -13,6 +13,10 @@ interface DataTypes{
   setPassword: any;
   name: string;
   setName: any;
+  firstOption: string;
+  setFirstOption: any;
+  secondOption: string;
+  setSecondOption: any;
 }
 
 export const InputContext = createContext({} as DataTypes);
@@ -21,10 +25,21 @@ export default function InputProvider({ children }: InputProviderProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
+  const [firstOption, setFirstOption] = useState('');
+  const [secondOption, setSecondOption] = useState('');
 
   const value = useMemo(() => ({
-    email, password, setEmail, setPassword, name, setName,
-  }), [email, password]);
+    email,
+    setEmail,
+    password,
+    setPassword,
+    name,
+    setName,
+    firstOption,
+    setFirstOption,
+    secondOption,
+    setSecondOption,
+  }), [email, password, name, firstOption, secondOption]);
 
   return (
     <InputContext.Provider value={value}>
