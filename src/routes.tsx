@@ -10,11 +10,11 @@ export default function Routes() {
   return (
     <Switch>
       <Route path="/" element={<Home />} />
+      <Route path="/home-player" element={<HomeMember />} />
       <Route path="/login/admin" element={<LoginAdmin />} />
       <Route path="/login/member" element={<LoginMember />} />
       <Route path="/view/questions" element={<ViewQuestions />} />
       <Route path="/register/player" element={<RegisterPlayer />} />
-      <Route path="/home-player" element={<HomeMember />} />
     </Switch>
   );
 }
