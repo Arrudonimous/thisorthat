@@ -1,10 +1,10 @@
 import { Routes as Switch, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import HomeMember from './pages/HomeMember';
-import LoginAdmin from './pages/LoginAdmin';
-import LoginMember from './pages/LoginMember';
-import RegisterPlayer from './pages/RegisterPlayer';
-import ViewQuestions from './pages/ViewQuestions';
+import Home from './Pages/Home';
+import HomeMember from './Pages/HomeMember';
+import LoginAdmin from './Pages/LoginAdmin';
+import LoginMember from './Pages/LoginMember';
+import RegisterPlayer from './Pages/RegisterPlayer';
+import ViewQuestions from './Pages/ViewQuestions';
 
 export default function Routes() {
   return (
