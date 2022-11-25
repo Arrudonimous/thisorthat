@@ -104,8 +104,7 @@ export default function ViewQuestions() {
               navigation
               modules={[Navigation, Pagination]}
               pagination
-              loop
-              className="flex flex-row gap-2"
+              className="flex flex-row gap-2 w-full"
             >
               {nonValidatedQuestions.map((question) => (
                 <SwiperSlide className="px-11" key={question.id}>
