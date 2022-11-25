@@ -8,7 +8,7 @@ interface SecondaryButtonProps{
 export default function SecondaryButton({ title }:SecondaryButtonProps) {
   const navigate = useNavigate();
   function handleNavigate() {
-    return navigate('/register/player');
+    return navigate('/login/member');
   }
 
   return (
