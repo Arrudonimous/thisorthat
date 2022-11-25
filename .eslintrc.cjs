@@ -33,5 +33,6 @@ module.exports = {
     'react/jsx-no-constructed-context-values': 0,
     'class-methods-use-this': 0,
     'react/require-default-props': 0,
+    'react/jsx-props-no-spreading': 0,
   },
 };

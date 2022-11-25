@@ -1,5 +1,6 @@
 import { useState, useContext } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
+import { motion as m } from 'framer-motion';
 import { InputContext } from '../../contexts/InputContext';
 
 import Container from '../../components/Container/Index';
@@ -7,6 +8,7 @@ import OR from '../../assets/OU.svg';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import SendQuestionsService from './services';
+import { EnterTransition } from '../../styles/EnterTransition';
 
 export default function SendQuestions() {
   const [loading, setLoading] = useState(false);
@@ -52,7 +54,10 @@ export default function SendQuestions() {
   }
 
   return (
-    <>
+    <m.div
+      className="w-full h-full"
+      {...EnterTransition}
+    >
       <Container title="Enviar perguntas" backPath="/home-player">
         <div className=" flex flex-col mt-6 rounded-lg px-16 text-text">
           <div className="bg-secondary px-6 pt-4 pb-10 rounded-lg w-full">
@@ -83,6 +88,6 @@ export default function SendQuestions() {
         </div>
       </Container>
       <ToastContainer autoClose={1000} />
-    </>
+    </m.div>
   );
 }

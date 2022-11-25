@@ -2,6 +2,7 @@ import { MdMail, MdLock } from 'react-icons/md';
 import { useContext, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { motion as m } from 'framer-motion';
 import { InputContext } from '../../contexts/InputContext';
 
 import Button from '../../components/Button';
@@ -11,6 +12,7 @@ import LoginAdminService from './services';
 import PasswordInput from '../../components/PasswordInput';
 
 import 'react-toastify/dist/ReactToastify.css';
+import { EnterTransition } from '../../styles/EnterTransition';
 
 export default function LoginAdmin() {
   const [isLoading, setIsLoading] = useState(false);
@@ -55,23 +57,29 @@ export default function LoginAdmin() {
   }
 
   return (
-    <Container title="Conecte-se como admin" backPath="/">
-      <div className=" flex flex-col gap-4 mt-20 px-16">
-        <Input placeholder="E-mail..." text="email" type="text">
-          <MdMail size={35} />
-        </Input>
-        <PasswordInput placeholder="Senha..." text="password" type="password">
-          <MdLock size={35} />
-        </PasswordInput>
-        <div
-          className="mt-4 bg-secondary rounded-lg hover:bg-[#002437] active:bg-[#001723] ease-in duration-150"
-          onClick={handleLogin}
-          id="button"
-        >
-          <Button title="Entrar" loading={isLoading} />
+    <m.div
+      className="w-full h-full"
+      {...EnterTransition}
+    >
+      <Container title="Conecte-se como admin" backPath="/">
+        <div className=" flex flex-col gap-4 mt-20 px-16">
+          <Input placeholder="E-mail..." text="email" type="text">
+            <MdMail size={35} />
+          </Input>
+          <PasswordInput placeholder="Senha..." text="password" type="password">
+            <MdLock size={35} />
+          </PasswordInput>
+          <div
+            className="mt-4 bg-secondary rounded-lg hover:bg-[#002437] active:bg-[#001723] ease-in duration-150"
+            onClick={handleLogin}
+            id="button"
+          >
+            <Button title="Entrar" loading={isLoading} />
+          </div>
         </div>
-      </div>
-      <ToastContainer autoClose={1500} />
-    </Container>
+        <ToastContainer autoClose={1500} />
+      </Container>
+    </m.div>
+
   );
 }

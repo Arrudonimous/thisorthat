@@ -4,6 +4,7 @@ import { BsFillTrashFill } from 'react-icons/bs';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { ToastContainer, toast } from 'react-toastify';
 import { Navigation, Pagination } from 'swiper';
+import { motion as m } from 'framer-motion';
 import { SocketContext } from '../../components/App';
 import { Question } from '../../types/Question';
 
@@ -15,6 +16,7 @@ import ViewQuestionsService from './services';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import { EnterTransition } from '../../styles/EnterTransition';
 
 export default function ViewQuestions() {
   const [nonValidatedQuestions, setNonValidatedQuestions] = useState<Question[]>([]);
@@ -96,7 +98,10 @@ export default function ViewQuestions() {
   }
 
   return (
-    <>
+    <m.div
+      className="w-full h-full"
+      {...EnterTransition}
+    >
       <Container title="Visualizar perguntas" backPath="/login/admin">
         <div className=" flex flex-row mt-6 rounded-lg px-6 py-4 text-text">
           {nonValidatedQuestions.length ? (
@@ -178,6 +183,6 @@ export default function ViewQuestions() {
       </Container>
       <ToastContainer autoClose={1000} />
 
-    </>
+    </m.div>
   );
 }
