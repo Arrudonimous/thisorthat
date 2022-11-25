@@ -35,6 +35,7 @@ export default function Input({
         className="w-full bg-transparent text-secondary font-bold text-lg outline-0 placeholder:text-secondary placeholder:opacity-80"
         onChange={(e) => setValue(e.target.value)}
         value={value}
+        id={type}
       />
     </div>
   );

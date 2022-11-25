@@ -11,7 +11,7 @@ import Input from '../../components/Input';
 import api from '../../services/api';
 
 import 'react-toastify/dist/ReactToastify.css';
-import RegisterPlayerServices from './services/RegisterPlayerServices';
+import RegisterPlayerServices from './services';
 
 export default function RegisterPlayer() {
   const navigate = useNavigate();
@@ -26,14 +26,18 @@ export default function RegisterPlayer() {
         email: context.email,
         password: context.password,
       });
-      console.log(data);
+
+      const login = await RegisterPlayerServices.postLogin({
+        email: context.email,
+        password: context.password,
+      });
 
       toast.success(data.message, {
         position: 'bottom-center',
       });
 
-      api.defaults.headers.common.Authorization = data.token;
-      localStorage.setItem('token', data.token);
+      api.defaults.headers.common.Authorization = login.token;
+      localStorage.setItem('token', login.token);
       setTimeout(() => navigate('/home-player'), 2700);
     } catch (error : any) {
       toast.error(error.response.data.message, {
