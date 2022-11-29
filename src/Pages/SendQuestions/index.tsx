@@ -22,8 +22,7 @@ export default function SendQuestions() {
 
   async function handleSendQuestion() {
     if (!firstOption.trim()
-    || !secondOption.trim()
-    || !questionTitle.trim()) {
+    || !secondOption.trim()) {
       return toast.error('Insira todos os campos antes de enviar a pergunta', {
         position: 'bottom-center',
       });
@@ -32,7 +31,7 @@ export default function SendQuestions() {
     try {
       setLoading(true);
       const data = await SendQuestionsService.postQuestion({
-        questionContent: questionTitle,
+        questionContent: questionTitle || 'Você prefere',
         firstOption,
         secondOption,
       });

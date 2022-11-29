@@ -7,6 +7,7 @@ import { Navigation, Pagination } from 'swiper';
 import { motion as m } from 'framer-motion';
 import { SocketContext } from '../../components/App';
 import { Question } from '../../types/Question';
+import { EnterTransition } from '../../styles/EnterTransition';
 
 import Container from '../../components/Container/Index';
 import OR from '../../assets/OU.svg';
@@ -16,7 +17,6 @@ import ViewQuestionsService from './services';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { EnterTransition } from '../../styles/EnterTransition';
 
 export default function ViewQuestions() {
   const [nonValidatedQuestions, setNonValidatedQuestions] = useState<Question[]>([]);

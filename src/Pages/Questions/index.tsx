@@ -1,12 +1,21 @@
 import { useEffect, useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+import { BsCheckLg } from 'react-icons/bs';
+import { GrLinkNext } from 'react-icons/gr';
 import { Question } from '../../types/Question';
 
 import QuestionsService from './services';
 import RandomizeQuestions from '../../utils/RandomizeQuestions';
+import CalcPercent from '../../utils/CalcPercent';
 
 export default function Questions() {
   const [question, setQuestion] = useState<Question>();
   const [loading, setLoading] = useState(false);
+  const [totalChoosed, setTotalChoosed] = useState();
+  const [optionChoosed, setOptionChoosed] = useState<number>();
+  const [firstChoosed, setFirstChoosed] = useState<number>();
+  const [secondChoosed, setSecondChoosed] = useState<number>();
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     (async () => {
@@ -16,12 +25,66 @@ export default function Questions() {
 
         setQuestion(data.questions[RandomizeQuestions(data.questions)]);
       } catch (error: any) {
-        console.log(error);
+        setErrorMessage(error.response.data.message);
+        toast.error(error.response.data.message);
       } finally {
         setLoading(false);
       }
     })();
   }, []);
+
+  async function handleChooseFirstOption(id: number| undefined) {
+    if (!id) {
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const data = await QuestionsService.patchChooseQuestion(id, 1);
+
+      setTotalChoosed(data.question.first_option_chosen_count
+        + data.question.second_option_chosen_count);
+
+      setOptionChoosed(1);
+
+      setFirstChoosed(data.question.first_option_chosen_count);
+      setSecondChoosed(data.question.second_option_chosen_count);
+    } catch (error: any) {
+      toast.error(error.response.data.message, {
+        position: 'bottom-center',
+      });
+    } finally {
+      setLoading(false);
+      setOptionChoosed(2);
+    }
+  }
+
+  async function handleChooseSecondOption(id: number| undefined) {
+    if (!id) {
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const data = await QuestionsService.patchChooseQuestion(id, 2);
+
+      setTotalChoosed(data.question.first_option_chosen_count
+        + data.question.second_option_chosen_count);
+
+      setOptionChoosed(2);
+
+      setFirstChoosed(data.question.first_option_chosen_count);
+      setSecondChoosed(data.question.second_option_chosen_count);
+    } catch (error: any) {
+      toast.error(error.response.data.message, {
+        position: 'bottom-center',
+      });
+    } finally {
+      setLoading(false);
+      setOptionChoosed(1);
+    }
+  }
 
   if (loading) {
     return (
@@ -52,6 +115,80 @@ export default function Questions() {
       </div>
     );
   }
+
+  if (errorMessage === 'Você já jogou todas as perguntas do jogo') {
+    return (
+      <div className="flex flex-row h-full text-text items-center justify-center ">
+        <div className="absolute bg-light py-4 items-center justify-center flex p-4 rounded-2xl">
+          <h1 className="text-black font-extrabold text-5xl">
+            Você já jogou todas as perguntas!
+          </h1>
+        </div>
+        <ToastContainer autoClose={1000} />
+      </div>
+    );
+  }
+
+  if (optionChoosed) {
+    return (
+      <div className="flex flex-row h-full text-text ">
+        <div className="absolute gap-8 bg-light w-4/6 left-2/4 -translate-x-2/4 top-8 py-4 items-center justify-center flex rounded-2xl">
+          <h1 className="text-black font-extrabold text-5xl">
+            {question?.question}
+          </h1>
+          <div
+            className="bg-[#014365] p-4 text-text rounded-full hover:cursor-pointer"
+            onClick={() => {
+              window.location.reload();
+            }}
+          >
+            <GrLinkNext color="white" />
+          </div>
+        </div>
+        <div
+          className="flex flex-1 bg-firstOption ease-out duration-150 hover:bg-current items-center justify-center flex-col"
+        >
+          {optionChoosed === 2 ? (
+            <div className="absolute flex -top-24 -left-24 bg-light w-48 h-48  rounded-full items-end justify-end p-10">
+              <BsCheckLg color="black" size={40} />
+            </div>
+          ) : null}
+          <h1 className="font-bold text-9xl">
+            {`${CalcPercent(firstChoosed, totalChoosed)}%`}
+          </h1>
+          <span className="font-extrabold">
+            {`${firstChoosed} pessoas ${optionChoosed === 1 ? 'discordam' : 'concordam'}`}
+          </span>
+          <span className="font-extrabold text-xl">{question?.first_option}</span>
+        </div>
+        <div
+          className="absolute top-2/4 left-2/4 w-28 h-28 bg-light -translate-x-2/4 -translate-y-2/4 rounded-full items-center justify-center flex"
+        >
+          <h1 className="text-4xl font-bold text-black">OU</h1>
+        </div>
+        <div
+          className="flex flex-1 bg-secondOption ease-out duration-150 hover:bg-current items-center justify-center flex-col"
+        >
+          {optionChoosed === 1 ? (
+            <div className="absolute flex -bottom-24 -right-24 bg-light w-48 h-48  rounded-full items-start justify-start p-10">
+              <BsCheckLg color="black" size={40} />
+            </div>
+          ) : null}
+          <h1 className="font-bold text-9xl">
+            {`${CalcPercent(secondChoosed, totalChoosed)}%`}
+          </h1>
+          <span className="font-extrabold">
+
+            {`${secondChoosed} pessoas ${optionChoosed === 2 ? 'discordam' : 'concordam'}`}
+
+          </span>
+          <span className="font-extrabold text-xl">{question?.second_option}</span>
+        </div>
+        <ToastContainer autoClose={1000} />
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-row h-full text-text ">
       <div className="absolute bg-light w-4/6 left-2/4 -translate-x-2/4 top-8 py-4 items-center justify-center flex rounded-2xl">
@@ -59,7 +196,11 @@ export default function Questions() {
           {question?.question}
         </h1>
       </div>
-      <button className="flex flex-1 bg-firstOption ease-out duration-150 hover:bg-current text-5xl hover:text-[3.02rem] items-center justify-center" type="button">
+      <button
+        className="flex flex-1 bg-firstOption ease-out duration-150 hover:bg-current text-5xl hover:text-[3.02rem] items-center justify-center"
+        type="button"
+        onClick={() => handleChooseFirstOption(question?.id)}
+      >
         <h1 className="font-black">{question?.first_option}</h1>
       </button>
       <div
@@ -67,9 +208,14 @@ export default function Questions() {
       >
         <h1 className="text-4xl font-bold text-black">OU</h1>
       </div>
-      <button className="flex flex-1 bg-secondOption ease-out duration-150 hover:bg-current text-5xl hover:text-[3.02rem] items-center justify-center" type="button">
+      <button
+        className="flex flex-1 bg-secondOption ease-out duration-150 hover:bg-current text-5xl hover:text-[3.02rem] items-center justify-center"
+        type="button"
+        onClick={() => handleChooseSecondOption(question?.id)}
+      >
         <h1 className="font-black">{question?.second_option}</h1>
       </button>
+      <ToastContainer autoClose={1000} />
     </div>
   );
 }
