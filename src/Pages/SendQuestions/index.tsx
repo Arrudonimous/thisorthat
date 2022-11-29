@@ -1,29 +1,28 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import { motion as m } from 'framer-motion';
-import { InputContext } from '../../contexts/InputContext';
 
 import Container from '../../components/Container/Index';
 import OR from '../../assets/OU.svg';
-import Input from '../../components/Input';
 import Button from '../../components/Button';
 import SendQuestionsService from './services';
 import { EnterTransition } from '../../styles/EnterTransition';
 
 export default function SendQuestions() {
   const [loading, setLoading] = useState(false);
-  const context = useContext(InputContext);
   const [questionTitle, setQuestionTitle] = useState('');
+  const [firstOption, setFirstOption] = useState('');
+  const [secondOption, setSecondOption] = useState('');
 
   function clearInputs() {
-    context.setFirstOption('');
-    context.setSecondOption('');
+    setFirstOption('');
+    setSecondOption('');
     setQuestionTitle('');
   }
 
   async function handleSendQuestion() {
-    if (!context.firstOption.trim()
-    || !context.secondOption.trim()
+    if (!firstOption.trim()
+    || !secondOption.trim()
     || !questionTitle.trim()) {
       return toast.error('Insira todos os campos antes de enviar a pergunta', {
         position: 'bottom-center',
@@ -34,8 +33,8 @@ export default function SendQuestions() {
       setLoading(true);
       const data = await SendQuestionsService.postQuestion({
         questionContent: questionTitle,
-        firstOption: context.firstOption,
-        secondOption: context.secondOption,
+        firstOption,
+        secondOption,
       });
 
       toast.success(data.message, {
@@ -66,15 +65,33 @@ export default function SendQuestions() {
                 className="text-base font-bold w-full bg-transparent outline-0"
                 placeholder="Descrição da pergunta"
                 onChange={(e) => setQuestionTitle(e.target.value)}
+                value={questionTitle}
               />
             </div>
-            <Input placeholder="Opção 1" type="text" text="firstOption" />
+
+            <div className="bg-[#D9D9D9] text-secondary flex flex-row gap-3 px-3 py-2 items-center rounded-lg drop-shadow-3xl">
+              <input
+                type="text"
+                placeholder="Opção 1"
+                className="w-full bg-transparent text-secondary font-bold text-lg outline-0 placeholder:text-secondary placeholder:opacity-80"
+                onChange={(e) => setFirstOption(e.target.value)}
+                value={firstOption}
+              />
+            </div>
 
             <div className="flex justify-center my-2">
               <img src={OR} alt="" />
             </div>
 
-            <Input placeholder="Opção 2" type="text" text="secondOption" />
+            <div className="bg-[#D9D9D9] text-secondary flex flex-row gap-3 px-3 py-2 items-center rounded-lg drop-shadow-3xl">
+              <input
+                type="text"
+                placeholder="Opção 2"
+                className="w-full bg-transparent text-secondary font-bold text-lg outline-0 placeholder:text-secondary placeholder:opacity-80"
+                onChange={(e) => setSecondOption(e.target.value)}
+                value={secondOption}
+              />
+            </div>
 
           </div>
 
