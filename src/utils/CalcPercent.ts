@@ -4,6 +4,14 @@ export default function CalcPercent(perc: number | undefined, total: number | un
     result = 100;
   }
 
+  if (!perc) {
+    return;
+  }
+
+  if (!total) {
+    return;
+  }
+
   if (perc !== total) {
     result = Math.floor((perc / total) * 100);
   }
